@@ -1,0 +1,3 @@
+/home/liten/Documents/cpp/openGLTEsting/build/CMakeFiles/SimpleX11App.dir
+/home/liten/Documents/cpp/openGLTEsting/build/CMakeFiles/edit_cache.dir
+/home/liten/Documents/cpp/openGLTEsting/build/CMakeFiles/rebuild_cache.dir

@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/SimpleX11App.dir/src/main.cpp.o -o SimpleX11App  /usr/lib/x86_64-linux-gnu/libX11.so 

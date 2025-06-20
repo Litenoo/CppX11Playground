@@ -3,23 +3,25 @@
 #include <cstdlib>
 #include <cmath>
 
+// Bresenham's line algorithm
 void drawLine(Display *d, Window w, GC gc, int x0, int y0, int x1, int y1)
 {
-    const float deltaX = x1 - x0;
-    const float deltaY = y1 - y0;
-    const float ratio = abs((deltaY) / (deltaX));
+    int deltaX = x1 - x0;
+    int deltaY = y1 - y0;
 
-    int j = y0;
-    float n = 1;
-    for (int i = x0; i < deltaX; ++n, i++)
+    const int m = deltaY / deltaX; // slope
+    int y = y0;
+    int e = 0; // error
+    for (int x = 0; x <= deltaX; ++x)
     {
-        std::cout << "I : " << i << "   J : " << j << "   N : " << n << std::endl;
-        if (n > ratio)
+        XDrawPoint(d, w, gc, x0 + x, y);
+
+        e = +m; // Increment error
+        if (e >= 0.5)
         {
-            n = n - ratio;
-            j++;
+            y += 1;   // Move to next row
+            e -= 1.0; // Decrement error
         }
-        XDrawPoint(d, w, gc, i, j);
     }
 }
 
@@ -44,15 +46,23 @@ int main()
         XParseColor(d, colormap, "green", &green_color);
         XAllocColor(d, colormap, &green_color);
 
+        // Allocate red color
+        XColor red_color;
+        XParseColor(d, colormap, "red", &red_color);
+        XAllocColor(d, colormap, &red_color);
+
         // Create a graphics context
         GC gc = XCreateGC(d, w, 0, NULL);
         XSetForeground(d, gc, green_color.pixel);
 
-        drawLine(d, w, gc, 10, 10, 100, 100);
+        drawLine(d, w, gc, 20, 20, 100, 200);
+
+        XSetForeground(d, gc, red_color.pixel);
+
+        drawLine(d, w, gc, 20, 20, 200, 100);
 
         XFreeGC(d, gc);
     }
-
     XCloseDisplay(d);
     return 0;
 }
